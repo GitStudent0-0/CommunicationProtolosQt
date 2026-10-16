@@ -1,19 +1,44 @@
+#include "CommandStart.h"
+#include <QByteArray>
 #include <QCoreApplication>
-
+#include <QFile>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QRandomGenerator>
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
+    QJsonObject jsonIn;
+    int random_id = QRandomGenerator::global()->bounded(0, 10);
+    CommandStart data(1, random_id, 10);
+    data.writeJson(jsonIn);
 
-    // Set up code that uses the Qt event loop here.
-    // Call QCoreApplication::quit() or QCoreApplication::exit() to quit the application.
-    // A not very useful example would be including
-    // #include <QTimer>
-    // near the top of the file and calling
-    // QTimer::singleShot(5000, &a, &QCoreApplication::quit);
-    // which quits the application after 5 seconds.
+    QJsonDocument docIn(jsonIn);
+    QByteArray bytesIn = docIn.toJson(QJsonDocument::Compact);
 
-    // If you do not need a running Qt event loop, remove the call
-    // to QCoreApplication::exec() or use the Non-Qt Plain C++ Application template.
+    QFile dataFile("/home/marina/CommunicationProtocols/dataJson.json");
+    if (dataFile.open(QIODevice::WriteOnly))
+    {
+      dataFile.write(bytesIn);
+      dataFile.close();
+    }
 
+    QByteArray bytesOut;
+    if (dataFile.open(QIODevice::ReadOnly))
+    {
+      bytesOut = dataFile.readAll();
+      dataFile.close();
+    }
+
+    QJsonParseError error;
+    QJsonDocument docOut;
+    docOut = QJsonDocument::fromJson(bytesOut, &error);
+    if (error.error != QJsonParseError::NoError)
+      qWarning() << "Error" << error.errorString();
+
+    QJsonObject jsonOut = docOut.object();
+    CommandStart data2;
+    data2.readJson(jsonOut);
+    data2.toDebug(qDebug());
     return QCoreApplication::exec();
 }
