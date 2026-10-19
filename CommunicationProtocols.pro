@@ -1,5 +1,9 @@
 QT = core
 
+TEMPLATE = lib
+CONFIG += staticlib
+TARGET = CommunicationProtocols
+
 CONFIG += c++17 cmdline
 
 # You can make your code fail to compile if it uses deprecated APIs.
@@ -8,6 +12,8 @@ CONFIG += c++17 cmdline
 
 SOURCES += \
         CommandStart.cpp \
+        JsonDecoder.cpp \
+        JsonEncoder.cpp \
         main.cpp
 
 # Default rules for deployment.
@@ -16,4 +22,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-  CommandStart.h
+  CommandStart.h \
+  JsonDecoder.h \
+  JsonEncoder.h

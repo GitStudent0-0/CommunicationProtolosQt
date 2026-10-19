@@ -1,26 +1,25 @@
 #include "CommandStart.h"
 CommandStart::CommandStart() {}
 CommandStart::CommandStart(int cmdType, int id, int count)
-  : m_CMDType(static_cast<Command>(cmdType))
+  : m_CMDType(static_cast<CMDType>(cmdType))
   , m_id(id)
   , m_count(count)
 {}
 
-void CommandStart::readJson(const QJsonObject &json)
+CommandStart::CommandStart(CommandStart& other)
 {
-    if (json.contains("CMDType") && json["CMDType"].isDouble())
-        m_CMDType = Command(json["CMDType"].toInt());
-    if (json.contains("id") && json["id"].isDouble())
-      m_id = json["id"].toInt();
-    if (json.contains("count") && json["count"].isDouble())
-      m_count = json["count"].toInt();
+  m_CMDType = other.m_CMDType;
+  m_id = other.m_id;
+  m_count = other.m_count;
 }
-void CommandStart::writeJson(QJsonObject& json) const
-{
-  json["CMDType"] = m_CMDType;
-  json["id"] = m_id;
-  json["count"] = m_count;
-}
+
+void CommandStart::setCMDType(CMDType _CMDType) { m_CMDType = _CMDType; }
+void CommandStart::setId(int _id) { m_id = _id; }
+void CommandStart::setCount(int _count) { m_count = _count; }
+
+CMDType CommandStart::getCMDType() const { return m_CMDType; }
+int CommandStart::getId() const { return m_id; }
+int CommandStart::getCount() const { return m_count; }
 
 void CommandStart::toDebug(QDebug dbg)
 {

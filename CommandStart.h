@@ -1,25 +1,34 @@
 #ifndef COMMANDSTART_H
 #define COMMANDSTART_H
-#include <QJsonObject>
-enum Command { START, MESSAGE, STOP };
-
+#include <QDebug>
+enum CMDType
+{
+  START,
+  MESSAGE,
+  STOP
+};
 class CommandStart : public QObject
 {
-    Q_OBJECT
-    Q_ENUM(Command);
+  Q_OBJECT
+  Q_ENUM(CMDType);
 
 public:
-    CommandStart();
-    CommandStart(int CMDType, int id, int count);
-    ~CommandStart() {};
-    void readJson(const QJsonObject &json);
-    void writeJson(QJsonObject &json) const;
-    void toDebug(QDebug dbg);
+  CommandStart();
+  CommandStart(int CMDType, int id, int count);
+  CommandStart(CommandStart& other);
+  ~CommandStart() {};
+  void toDebug(QDebug dbg);
+  void setCMDType(CMDType _CMDType);
+  void setId(int _id);
+  void setCount(int _count);
+  CMDType getCMDType() const;
+  int getId() const;
+  int getCount() const;
 
-  private:
-    Command m_CMDType;
-    int m_id;
-    int m_count;
+private:
+  CMDType m_CMDType;
+  int m_id;
+  int m_count;
 };
 
 #endif // COMMANDSTART_H
