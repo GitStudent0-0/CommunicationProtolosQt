@@ -10,11 +10,8 @@ bool JsonDecoder::readJson(const QByteArray& data, CommandStart& command)
     qWarning() << error.errorString();
     return false;
   }
-  if (json.contains("CMDType") && json["CMDType"].isDouble())
-    command.setCMDType(CMDType(json["CMDType"].toInt()));
-  if (json.contains("id") && json["id"].isDouble())
-    command.setId(json["id"].toInt());
-  if (json.contains("count") && json["count"].isDouble())
-    command.setCount(json["count"].toInt());
+  if (json.contains("CMDType") && json["CMDType"].isDouble() &&
+      json.contains("count") && json["count"].isDouble())
+    command.init(json["CMDType"].toInt(), json["count"].toInt());
   return true;
 }

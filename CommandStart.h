@@ -3,31 +3,28 @@
 #include <QDebug>
 enum CMDType
 {
-  START,
+  START = 1,
   MESSAGE,
   STOP
 };
 class CommandStart : public QObject
 {
-  Q_OBJECT
   Q_ENUM(CMDType);
 
 public:
   CommandStart();
-  CommandStart(int CMDType, int id, int count);
+  CommandStart(int CMDType, int count);
   CommandStart(CommandStart& other);
+  CommandStart(const CommandStart& other);
   ~CommandStart() {};
+  void init(int cmdType, int count);
   void toDebug(QDebug dbg);
-  void setCMDType(CMDType _CMDType);
-  void setId(int _id);
-  void setCount(int _count);
   CMDType getCMDType() const;
-  int getId() const;
   int getCount() const;
+  QVector<int> getData() const;
 
 private:
   CMDType m_CMDType;
-  int m_id;
   int m_count;
 };
 
