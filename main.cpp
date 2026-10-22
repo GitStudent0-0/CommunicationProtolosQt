@@ -6,22 +6,24 @@
 #include <QFile>
 #include <QJsonDocument>
 #include <QJsonObject>
-#include <QRandomGenerator>
+#include <log4cplus/configurator.h>
+#include <log4cplus/initializer.h>
 int main(int argc, char *argv[])
 {
-    QCoreApplication a(argc, argv);
-    QJsonObject jsonIn;
-    int random_id = QRandomGenerator::global()->bounded(0, 10);
-    CommandStart data(1, random_id, 10);
-    JsonEncoder encoder;
-    QByteArray bytesIn = encoder.writeJson(data);
+  Initializer initializer;
+  PropertyConfigurator::doConfigure("log4cplus.properties");
+  QCoreApplication a(argc, argv);
+  QJsonObject jsonIn;
+  CommandStart data(1, 10);
+  JsonEncoder encoder;
+  QByteArray bytesIn = encoder.writeJson(data);
 
-    QFile dataFile("/home/marina/CommunicationProtocols/dataJson.json");
-    if (dataFile.open(QIODevice::WriteOnly))
-    {
-      dataFile.write(bytesIn);
-      dataFile.close();
-    }
+  QFile dataFile("/home/marina/CommunicationProtocols/dataJson.json");
+  if (dataFile.open(QIODevice::WriteOnly))
+  {
+    dataFile.write(bytesIn);
+    dataFile.close();
+  }
 
     QByteArray bytesOut;
     if (dataFile.open(QIODevice::ReadOnly))

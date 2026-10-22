@@ -1,15 +1,26 @@
 #ifndef JSONDECODER_H
 #define JSONDECODER_H
+#include "Command.h"
+#include "CommandMessage.h"
 #include "CommandStart.h"
+#include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <log4cplus/logger.h>
+#include <log4cplus/loggingmacros.h>
+using namespace log4cplus;
 class JsonDecoder
 {
 
 public:
   JsonDecoder() {};
   ~JsonDecoder() {};
+  bool readJson(const QByteArray& data, Command& command);
   bool readJson(const QByteArray& data, CommandStart& command);
+  bool readJson(const QByteArray& data, CommandMessage& command);
+
+private:
+  Logger m_logger;
 };
 
 #endif // JSONDECODER_H

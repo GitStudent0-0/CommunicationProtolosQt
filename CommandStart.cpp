@@ -2,13 +2,8 @@
 CommandStart::CommandStart() {}
 CommandStart::CommandStart(int cmdType, int count) { init(cmdType, count); }
 
-CommandStart::CommandStart(CommandStart& other)
-{
-  m_CMDType = other.m_CMDType;
-  m_count = other.m_count;
-}
-
 CommandStart::CommandStart(const CommandStart& other)
+  : Command(other)
 {
   m_CMDType = other.m_CMDType;
   m_count = other.m_count;
@@ -20,7 +15,6 @@ void CommandStart::init(int cmdType, int count)
   m_count = count;
 }
 
-CMDType CommandStart::getCMDType() const { return m_CMDType; }
 int CommandStart::getCount() const { return m_count; }
 
 void CommandStart::toDebug(QDebug dbg)

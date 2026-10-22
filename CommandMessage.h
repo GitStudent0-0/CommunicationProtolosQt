@@ -1,22 +1,21 @@
 #ifndef COMMANDMESSAGE_H
 #define COMMANDMESSAGE_H
-#include "CommandStart.h"
+#include "Command.h"
 #include <QVector>
-class CommandMessage : public CommandStart
+class CommandMessage : public Command
 {
-  Q_OBJECT
 
 public:
   CommandMessage();
   CommandMessage(int CMDType, int count, const QVector<double>& data);
-  CommandMessage(CommandMessage& other);
   CommandMessage(const CommandMessage& other);
   ~CommandMessage() {};
+  void init(int cmdType, int count, const QVector<double>& data);
   void toDebug(QDebug dbg);
+  int getCount() const;
   QVector<double> getData() const;
 
 private:
-  CMDType m_CMDType;
   int m_count;
   QVector<double> m_data;
 };
