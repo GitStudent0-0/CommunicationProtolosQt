@@ -25,17 +25,17 @@ int main(int argc, char *argv[])
     dataFile.close();
   }
 
-    QByteArray bytesOut;
-    if (dataFile.open(QIODevice::ReadOnly))
-    {
-      bytesOut = dataFile.readAll();
-      dataFile.close();
-    }
-    CommandStart data2;
-    JsonDecoder decoder;
-    bool succes = decoder.readJson(bytesOut, data2);
-    if (succes)
-      data2.toDebug(qDebug());
+  QByteArray bytesOut;
+  if (dataFile.open(QIODevice::ReadOnly))
+  {
+    bytesOut = dataFile.readAll();
+    dataFile.close();
+  }
+  CommandStart data2;
+  JsonDecoder decoder;
+  // //bool succes = decoder.readJson(bytesOut, data2);
+  // if (succes)
+  //   data2.toDebug(qDebug());
 
-    return QCoreApplication::exec();
+  return QCoreApplication::exec();
 }

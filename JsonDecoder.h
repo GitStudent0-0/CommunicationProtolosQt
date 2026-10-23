@@ -15,9 +15,10 @@ class JsonDecoder
 public:
   JsonDecoder() {};
   ~JsonDecoder() {};
-  bool readJson(const QByteArray& data, Command& command);
-  bool readJson(const QByteArray& data, CommandStart& command);
-  bool readJson(const QByteArray& data, CommandMessage& command);
+  bool readJson(const QJsonObject& json, Command& command);
+  bool readJson(const QJsonObject& json, CommandStart& command);
+  bool readJson(const QJsonObject& json, CommandMessage& command);
+  bool parseToRawObject(const QByteArray& data, QJsonObject& jsonObj);
 
 private:
   Logger m_logger;
