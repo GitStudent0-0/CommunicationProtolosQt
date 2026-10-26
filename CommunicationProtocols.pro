@@ -1,5 +1,5 @@
 QT = core
-
+QT += xml
 TEMPLATE = lib
 CONFIG += staticlib
 CONFIG += link_pkgconfig

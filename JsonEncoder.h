@@ -3,9 +3,12 @@
 #include "Command.h"
 #include "CommandMessage.h"
 #include "CommandStart.h"
+#include <QDomElement>
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QXmlStreamWriter>
+#include <QtXml>
 class JsonEncoder
 {
 
