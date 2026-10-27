@@ -1,16 +1,11 @@
 #include "JsonDecoder.h"
+#include "Command.h"
+#include "CommandMessage.h"
+#include "CommandStart.h"
 
-JsonDecoder::JsonDecoder()
-  : m_logger(Logger::getInstance("JsonDecoder"))
-{}
-
-Command* JsonDecoder::getCmd(const QByteArray& data)
+Command* JsonDecoder::getCmd(const QByteArray& data, QJsonParseError& parseError)
 {
-  QJsonParseError parseError;
   QJsonDocument jsonDoc = QJsonDocument::fromJson(data, &parseError);
-  // if (parseError.error != QJsonParseError::NoError)
-  //   LOG4CPLUS_ERROR(m_logger, "Error: " <<
-  //   parseError.errorString().toStdString());
   QJsonObject json;
   if (jsonDoc.isObject())
     json = jsonDoc.object();

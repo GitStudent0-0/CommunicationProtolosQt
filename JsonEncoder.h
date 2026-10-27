@@ -9,15 +9,15 @@
 #include <QJsonObject>
 #include <QXmlStreamWriter>
 #include <QtXml>
+
 class JsonEncoder
 {
-
 public:
   JsonEncoder() {};
   ~JsonEncoder() {};
-  QByteArray writeJson(const Command& command);
-  QByteArray writeJson(const CommandStart& command);
-  QByteArray writeJson(const CommandMessage& command);
+  static QByteArray writeJson(const Command& command);
+  static QByteArray writeJson(const CommandStart& command);
+  static QByteArray writeJson(const CommandMessage& command);
 };
 
 #endif // JSONENCODER_H

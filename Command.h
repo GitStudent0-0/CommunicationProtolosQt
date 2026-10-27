@@ -16,9 +16,9 @@ public:
   Command();
   Command(int CMDType);
   Command(const Command& other);
-  ~Command() = default;
+  virtual ~Command() = default;
   void init(int cmdType);
-  void toDebug(QDebug dbg);
+  virtual void toDebug(QDebug dbg);
   CMDType getCMDType() const;
 
 protected:
