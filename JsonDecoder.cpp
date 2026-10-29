@@ -8,47 +8,43 @@ Command* JsonDecoder::getCmd(const QByteArray& data, QJsonParseError& parseError
   QJsonDocument jsonDoc = QJsonDocument::fromJson(data, &parseError);
   QJsonObject json;
   if (jsonDoc.isObject())
+  {
     json = jsonDoc.object();
-  switch (static_cast<CMDType>(json["CMDType"].toInt()))
-  {
-  case CMDType::START:
-  {
-    if (json.contains("CMDType") && json["CMDType"].isDouble() &&
-        json.contains("count") && json["count"].isDouble())
+    switch (static_cast<CMDType>(json["CMDType"].toInt()))
     {
-      CommandStart* cmdStart = new CommandStart();
-      cmdStart->init(json["CMDType"].toInt(), json["count"].toInt());
-      return cmdStart;
+    case CMDType::START:
+    {
+      if (json.contains("count") && json["count"].isDouble())
+      {
+        CommandStart* cmdStart = new CommandStart();
+        cmdStart->init(json["CMDType"].toInt(), json["count"].toInt());
+        return cmdStart;
+      }
+      break;
     }
-    break;
-  }
-  case CMDType::STOP:
-  {
-    if (json.contains("CMDType") && json["CMDType"].isDouble())
+    case CMDType::STOP:
     {
       Command* cmdStop = new Command();
       cmdStop->init(json["CMDType"].toInt());
       return cmdStop;
+      break;
     }
-    break;
-  }
-  case CMDType::MESSAGE:
-  {
-    if (json.contains("CMDType") && json["CMDType"].isDouble() &&
-        json.contains("count") && json["count"].isDouble() &&
-        json.contains("data") && json["data"].isArray())
+    case CMDType::MESSAGE:
     {
-      CommandMessage* cmdMessage = new CommandMessage();
-      const QJsonArray jsonArray = json["data"].toArray();
-      QVector<double> data;
-      for (const QJsonValue& val : qAsConst(jsonArray))
-        data.append(val.toDouble());
-      cmdMessage->init(json["CMDType"].toInt(), json["count"].toInt(), data);
-      return cmdMessage;
+      if (json.contains("count") && json["count"].isDouble() &&
+          json.contains("data") && json["data"].isArray())
+      {
+        CommandMessage* cmdMessage = new CommandMessage();
+        const QJsonArray jsonArray = json["data"].toArray();
+        QVector<double> data;
+        for (const QJsonValue& val : qAsConst(jsonArray))
+          data.append(val.toDouble());
+        cmdMessage->init(json["CMDType"].toInt(), json["count"].toInt(), data);
+        return cmdMessage;
+      }
+      break;
     }
-    break;
+    }
   }
-  default:
-    return nullptr;
-  }
+  return nullptr;
 }

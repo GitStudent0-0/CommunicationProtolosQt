@@ -17,6 +17,8 @@ SOURCES += \
         CommandStart.cpp \
         JsonDecoder.cpp \
         JsonEncoder.cpp \
+        XmlDecoder.cpp \
+        XmlEncoder.cpp \
         main.cpp
 
 # Default rules for deployment.
@@ -31,7 +33,9 @@ HEADERS += \
   CommandMessage.h \
   CommandStart.h \
   JsonDecoder.h \
-  JsonEncoder.h
+  JsonEncoder.h \
+  XmlDecoder.h \
+  XmlEncoder.h
 
 config_files.files = $$_PRO_FILE_PWD_/log4cplus.properties
 config_files.path = $$OUT_PWD
