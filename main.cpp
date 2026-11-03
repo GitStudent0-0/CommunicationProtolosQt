@@ -1,6 +1,5 @@
 #include "CommandStart.h"
-#include "JsonDecoder.h"
-#include "JsonEncoder.h"
+#include "JsonProtocol.h"
 #include <QByteArray>
 #include <QCoreApplication>
 #include <QFile>
@@ -8,10 +7,13 @@
 #include <QJsonObject>
 #include <log4cplus/configurator.h>
 #include <log4cplus/initializer.h>
+
+using namespace log4cplus;
+
 int main(int argc, char *argv[])
 {
-  // Initializer initializer;
-  // PropertyConfigurator::doConfigure("log4cplus.properties");
+  Initializer initializer;
+  PropertyConfigurator::doConfigure("log4cplus.properties");
   QCoreApplication a(argc, argv);
   // QJsonObject jsonIn;
   // CommandStart data(1, 10);

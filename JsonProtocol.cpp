@@ -1,10 +1,11 @@
-#include "JsonDecoder.h"
+#include "JsonProtocol.h"
 #include "Command.h"
 #include "CommandMessage.h"
 #include "CommandStart.h"
 
-Command* JsonDecoder::getCmd(const QByteArray& data, QJsonParseError& parseError)
+Command* JsonProtocol::read(const QByteArray& data)
 {
+  QJsonParseError parseError;
   QJsonDocument jsonDoc = QJsonDocument::fromJson(data, &parseError);
   QJsonObject json;
   if (jsonDoc.isObject())
@@ -47,4 +48,39 @@ Command* JsonDecoder::getCmd(const QByteArray& data, QJsonParseError& parseError
     }
   }
   return nullptr;
+}
+
+QByteArray JsonProtocol::write(Command* command)
+{
+  QJsonObject json;
+  QByteArray bytes;
+  json["CMDType"] = static_cast<int>(command->getCMDType());
+  switch (command->getCMDType())
+  {
+  case CMDType::START:
+  {
+    if (CommandStart* cmdStart = dynamic_cast<CommandStart*>(command))
+      json["count"] = cmdStart->getCount();
+    break;
+  }
+  case CMDType::STOP:
+  {
+    break;
+  }
+  case CMDType::MESSAGE:
+  {
+    if (CommandMessage* cmdMessage = dynamic_cast<CommandMessage*>(command))
+    {
+      json["count"] = cmdMessage->getCount();
+      QJsonArray jsonArray;
+      for (const double& val : cmdMessage->getData())
+        jsonArray.append(val);
+      json["data"] = jsonArray;
+    }
+    break;
+  }
+  }
+  QJsonDocument doc(json);
+  bytes = doc.toJson(QJsonDocument::Compact);
+  return bytes;
 }

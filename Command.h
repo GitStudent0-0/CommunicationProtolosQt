@@ -1,12 +1,14 @@
 #ifndef COMMAND_H
 #define COMMAND_H
 #include <QDebug>
+
 enum CMDType
 {
   START = 1,
   MESSAGE,
   STOP
 };
+
 class Command
 {
   Q_GADGET

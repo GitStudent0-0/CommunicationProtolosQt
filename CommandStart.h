@@ -10,9 +10,10 @@ public:
   CommandStart();
   CommandStart(int CMDType, int count);
   CommandStart(const CommandStart& other);
-  ~CommandStart() {};
+  ~CommandStart() override = default;
+  ;
   void init(int cmdType, int count);
-  void toDebug(QDebug dbg);
+  void toDebug(QDebug dbg) override;
   int getCount() const;
 
 private:

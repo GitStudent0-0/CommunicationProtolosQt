@@ -1,9 +1,9 @@
-#include "XmlDecoder.h"
+#include "XmlProtocol.h"
 #include "Command.h"
 #include "CommandMessage.h"
 #include "CommandStart.h"
 
-Command* XmlDecoder::getCmd(const QByteArray& data)
+Command* XmlProtocol::read(const QByteArray& data)
 {
   QXmlStreamReader xml(data);
   if (xml.readNextStartElement() && xml.name() == "Command")
@@ -28,7 +28,6 @@ Command* XmlDecoder::getCmd(const QByteArray& data)
         Command* cmdStop = new Command();
         cmdStop->init(type);
         return cmdStop;
-        break;
       }
       case CMDType::MESSAGE:
       {
@@ -56,4 +55,47 @@ Command* XmlDecoder::getCmd(const QByteArray& data)
     }
   }
   return nullptr;
+}
+
+QByteArray XmlProtocol::write(Command* command)
+{
+  QByteArray bytes;
+  QXmlStreamWriter xml(&bytes);
+  xml.writeStartElement("Command");
+  xml.writeStartElement("CMDType");
+  xml.writeCharacters(QString::number(command->getCMDType()));
+  xml.writeEndElement();
+  switch (command->getCMDType())
+  {
+  case CMDType::START:
+  {
+    CommandStart* cmdStart = dynamic_cast<CommandStart*>(command);
+    xml.writeStartElement("count");
+    xml.writeCharacters(QString::number(cmdStart->getCount()));
+    xml.writeEndElement();
+    break;
+  }
+  case CMDType::STOP:
+  {
+    break;
+  }
+  case CMDType::MESSAGE:
+  {
+    CommandMessage* cmdMessage = dynamic_cast<CommandMessage*>(command);
+    xml.writeStartElement("count");
+    xml.writeCharacters(QString::number(cmdMessage->getCount()));
+    xml.writeEndElement();
+    xml.writeStartElement("data");
+    for (const double& val : cmdMessage->getData())
+    {
+      xml.writeStartElement("value");
+      xml.writeCharacters(QString::number(val));
+      xml.writeEndElement();
+    }
+    xml.writeEndElement();
+    break;
+  }
+  }
+  xml.writeEndElement();
+  return bytes;
 }

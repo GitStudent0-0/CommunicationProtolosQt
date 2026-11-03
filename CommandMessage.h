@@ -9,9 +9,9 @@ public:
   CommandMessage();
   CommandMessage(int CMDType, int count, const QVector<double>& data);
   CommandMessage(const CommandMessage& other);
-  ~CommandMessage() {};
+  ~CommandMessage() override = default;
   void init(int cmdType, int count, const QVector<double>& data);
-  void toDebug(QDebug dbg);
+  void toDebug(QDebug dbg) override;
   int getCount() const;
   QVector<double> getData() const;
 
