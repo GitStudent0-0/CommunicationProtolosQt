@@ -1,5 +1,7 @@
 #include "CommandMessage.h"
+
 CommandMessage::CommandMessage() {}
+
 CommandMessage::CommandMessage(int cmdType, int count, const QVector<double>& data)
 {
   init(cmdType, count, data);

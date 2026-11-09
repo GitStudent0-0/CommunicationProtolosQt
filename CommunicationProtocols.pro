@@ -15,10 +15,8 @@ SOURCES += \
         Command.cpp \
         CommandMessage.cpp \
         CommandStart.cpp \
-        JsonEncoder.cpp \
         JsonProtocol.cpp \
         Protocol.cpp \
-        XmlEncoder.cpp \
         XmlProtocol.cpp \
         main.cpp
 
@@ -33,10 +31,8 @@ HEADERS += \
   Command.h \
   CommandMessage.h \
   CommandStart.h \
-  JsonEncoder.h \
   JsonProtocol.h \
   Protocol.h \
-  XmlEncoder.h \
   XmlProtocol.h
 
 config_files.files = $$_PRO_FILE_PWD_/log4cplus.properties

@@ -1,5 +1,7 @@
 #include "CommandStart.h"
+
 CommandStart::CommandStart() {}
+
 CommandStart::CommandStart(int cmdType, int count) { init(cmdType, count); }
 
 CommandStart::CommandStart(const CommandStart& other)

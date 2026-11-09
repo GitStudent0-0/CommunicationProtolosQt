@@ -1,5 +1,7 @@
 #include "Command.h"
+
 Command::Command() {}
+
 Command::Command(int cmdType) { init(cmdType); }
 
 Command::Command(const Command& other) { m_CMDType = other.m_CMDType; }
