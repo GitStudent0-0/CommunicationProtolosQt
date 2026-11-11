@@ -3,6 +3,16 @@
 #include "CommandMessage.h"
 #include "CommandStart.h"
 
+XmlProtocol::XmlProtocol()
+{
+  LOG4CPLUS_TRACE(m_logger, "Memory allocated XmlProtocol: " << this);
+}
+
+XmlProtocol::~XmlProtocol()
+{
+  LOG4CPLUS_TRACE(m_logger, "Memory freed XmlProtocol: " << this);
+}
+
 Command* XmlProtocol::read(const QByteArray& data)
 {
   QXmlStreamReader xml(data);

@@ -9,8 +9,8 @@
 class JsonProtocol : public Protocol
 {
 public:
-  JsonProtocol() {};
-  ~JsonProtocol() override = default;
+  JsonProtocol();
+  ~JsonProtocol() override;
   Command* read(const QByteArray& data) override;
   QByteArray write(Command* command) override;
 };

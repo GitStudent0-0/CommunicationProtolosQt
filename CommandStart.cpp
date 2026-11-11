@@ -1,14 +1,26 @@
 #include "CommandStart.h"
 
-CommandStart::CommandStart() {}
+CommandStart::CommandStart()
+{
+  LOG4CPLUS_TRACE(m_logger, "Memory allocated CommandStart: " << this);
+}
 
-CommandStart::CommandStart(int cmdType, int count) { init(cmdType, count); }
+CommandStart::CommandStart(int cmdType, int count)
+  : CommandStart()
+{
+  init(cmdType, count);
+}
 
 CommandStart::CommandStart(const CommandStart& other)
   : Command(other)
 {
   m_CMDType = other.m_CMDType;
   m_count = other.m_count;
+}
+
+CommandStart::~CommandStart()
+{
+  LOG4CPLUS_TRACE(m_logger, "Memory freed CommandStart: " << this);
 }
 
 void CommandStart::init(int cmdType, int count)

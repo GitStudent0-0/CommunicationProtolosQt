@@ -1,8 +1,12 @@
 #include "CommandMessage.h"
 
-CommandMessage::CommandMessage() {}
+CommandMessage::CommandMessage()
+{
+  LOG4CPLUS_TRACE(m_logger, "Memory allocated CommandMessage: " << this);
+}
 
 CommandMessage::CommandMessage(int cmdType, int count, const QVector<double>& data)
+  : CommandMessage()
 {
   init(cmdType, count, data);
 }
@@ -12,6 +16,11 @@ CommandMessage::CommandMessage(const CommandMessage& other)
 {
   m_CMDType = other.m_CMDType;
   m_count = other.m_count;
+}
+
+CommandMessage::~CommandMessage()
+{
+  LOG4CPLUS_TRACE(m_logger, "Memory freed CommandMessage: " << this);
 }
 
 void CommandMessage::init(int cmdType, int count, const QVector<double>& data)

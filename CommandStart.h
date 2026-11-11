@@ -10,7 +10,7 @@ public:
   CommandStart();
   CommandStart(int CMDType, int count);
   CommandStart(const CommandStart& other);
-  ~CommandStart() override = default;
+  ~CommandStart() override;
   ;
   void init(int cmdType, int count);
   void toDebug(QDebug dbg) override;

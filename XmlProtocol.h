@@ -7,8 +7,8 @@
 class XmlProtocol : public Protocol
 {
 public:
-  XmlProtocol() {};
-  ~XmlProtocol() override = default;
+  XmlProtocol();
+  ~XmlProtocol() override;
   Command* read(const QByteArray& data) override;
   QByteArray write(Command* command) override;
 };

@@ -3,6 +3,16 @@
 #include "CommandMessage.h"
 #include "CommandStart.h"
 
+JsonProtocol::JsonProtocol()
+{
+  LOG4CPLUS_TRACE(m_logger, "Memory allocated JsonProtocol: " << this);
+}
+
+JsonProtocol::~JsonProtocol()
+{
+  LOG4CPLUS_TRACE(m_logger, "Memory freed JsonProtocol: " << this);
+}
+
 Command* JsonProtocol::read(const QByteArray& data)
 {
   QJsonParseError parseError;
